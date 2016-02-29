@@ -10,7 +10,7 @@ import com.qinicy.tools.presentation.Interactor.ICheckPhoneNumInteractor;
 public class CheckPhoneNumInteractor implements ICheckPhoneNumInteractor {
 
     @Override
-    public void checkPhoneNum(int number, IApiCallBack listener) {
+    public void checkPhoneNum(Long number, IApiCallBack listener) {
         APIs.getInstance().checkPhoneNum(number,listener);
     }
 }

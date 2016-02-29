@@ -1,8 +1,10 @@
 package com.qinicy.tools.presentation.presenter.impl;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.qinicy.tools.R;
 import com.qinicy.tools.data.api.ApiParser;
 import com.qinicy.tools.data.api.ApiResponse;
 import com.qinicy.tools.data.api.IApiCallBack;
@@ -23,6 +25,8 @@ public class CheckPhoneNumPresenter implements ICheckPhoneNumPresenter {
     private ICheckPhoneNumInfoView mCheckPhoneNumInfoView;
     private ICheckPhoneNumInteractor mCheckPhoneNumInteractor;
 
+    private final String TAG = "CheckPhoneNumPresenter";
+
     public CheckPhoneNumPresenter(Context mContext, ICheckPhoneNumInfoView mCheckPhoneNumInfoView) {
         this.mContext = mContext;
         this.mCheckPhoneNumInfoView = mCheckPhoneNumInfoView;
@@ -30,28 +34,55 @@ public class CheckPhoneNumPresenter implements ICheckPhoneNumPresenter {
     }
 
     @Override
-    public void checkPhoneNumInfo(int number) {
-
+    public void checkPhoneNumInfo(Long number) {
+        mCheckPhoneNumInfoView.loading(true);
         mCheckPhoneNumInteractor.checkPhoneNum(number, new IApiCallBack() {
             @Override
             public void onError(Request request, Exception e) {
-
+                mCheckPhoneNumInfoView.loading(false);
+                mCheckPhoneNumInfoView.setError(mContext.getString(R.string.error_network_fail));
             }
 
             @Override
             public void onResponse(String response) {
-                Type typeOfT = new TypeToken<ApiResponse<PhoneNumEntity>>(){}.getType();
-                ApiResponse<PhoneNumEntity> phoneNumEntityApiResponse = ApiParser.getInstance().parseResponseFrom(response,typeOfT);
+                mCheckPhoneNumInfoView.loading(false);
+                Log.d(TAG, "onResponse: \n response");
+                Type typeOfT = new TypeToken<ApiResponse<PhoneNumEntity>>() {
+                }.getType();
+                ApiResponse<PhoneNumEntity> phoneNumEntityApiResponse = ApiParser.getInstance().parseResponseFrom(response, typeOfT);
 
-                if (phoneNumEntityApiResponse!=null)
-                    mCheckPhoneNumInfoView.setPhoneNumInfo(phoneNumEntityApiResponse.getResult());
-
+                if (phoneNumEntityApiResponse != null)
+                    handlerResponse(phoneNumEntityApiResponse);
             }
         });
     }
 
+
     @Override
     public void init() {
 
+    }
+
+    private void setError(String msg) {
+        mCheckPhoneNumInfoView.setError(msg);
+    }
+
+    private void handlerResponse(ApiResponse<PhoneNumEntity> response) {
+        {
+
+            int code = response.getResultcode();
+            switch (code) {
+                case 200:
+                    mCheckPhoneNumInfoView.setPhoneNumInfo(response.getResult());
+                    break;
+                case 203:
+                    mCheckPhoneNumInfoView.setError(mContext.getString(R.string.error_no_result));
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
     }
 }

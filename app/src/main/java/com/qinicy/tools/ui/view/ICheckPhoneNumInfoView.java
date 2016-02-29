@@ -8,4 +8,7 @@ import com.qinicy.tools.data.entities.PhoneNumEntity;
 public interface ICheckPhoneNumInfoView extends IView{
     void setPhoneNumInfo(PhoneNumEntity phoneNumEntity);
 
+    void setError(String msg);
+    void loading(boolean loading);
+
 }

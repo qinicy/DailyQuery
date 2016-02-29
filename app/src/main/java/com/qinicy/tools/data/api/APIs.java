@@ -31,7 +31,7 @@ public class APIs implements ICheckPhoneNumApi {
     }
 
     @Override
-    public void checkPhoneNum(int number, IApiCallBack listener) {
+    public void checkPhoneNum(Long number, IApiCallBack listener) {
 
         Map<String,String> params = new HashMap<>();
         params.put("phone",String.valueOf(number));

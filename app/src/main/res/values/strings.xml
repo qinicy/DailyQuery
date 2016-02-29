@@ -7,5 +7,23 @@
     <string name="areacode">区号：</string>
     <string name="zip">邮政编码：</string>
     <string name="company">运营商：</string>
-    <string name="card">卡类：</string>
+    <string name="card">卡种：</string>
+    <string name="error_wrong_phone_number">非法的电话号码</string>
+    <string name="error_wrong_phone_number_start">手机号码必须以1开头</string>
+    <string name="error_min7char_phone_number">请输入需要查询的手机号码或手机号码前7位</string>
+    <string name="error_max11char_limit">最多只能输入11位手机号码</string>
+    <string name="error_no_result">无法查询到相应信息,请检查手机号码是否错误哈~</string>
+    <string name="error_network_fail">网络错误</string>
+    <string name="path_search">
+       M141,17 A9,9 0 1,1 142,16 L149,23
+    </string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="china_unicom">联通</string>
+    <string name="china_mobile">联通</string>
+    <string name="china_telecom">电信</string>
+
+
+
 </resources>

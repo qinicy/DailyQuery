@@ -5,4 +5,5 @@ package com.qinicy.tools.ui.view;
  */
 public interface IView {
     void init();
+
 }
